@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaCheques.API", "SistemaCheques.API\SistemaCheques.API.csproj", "{9CD557BE-1A47-4E50-B087-04F4F69027D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaCheques.Domain", "SistemaCheques.Domain\SistemaCheques.Domain.csproj", "{3FB670F9-B7BF-4C4E-97F7-0A0FABFB4896}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaCheques.Application", "SistemaCheques.Application\SistemaCheques.Application.csproj", "{C4D91C4A-2801-427D-8825-1A8BA89E46DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaCheques.Infrastructure", "SistemaCheques.Infrastructure\SistemaCheques.Infrastructure.csproj", "{A4BE2D71-8BF2-4B36-982F-E964C69CC323}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaCheques.Tests", "SistemaCheques.Tests\SistemaCheques.Tests.csproj", "{C5ABBB51-08BF-4BF2-93E1-47A09F79EE32}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9CD557BE-1A47-4E50-B087-04F4F69027D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CD557BE-1A47-4E50-B087-04F4F69027D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CD557BE-1A47-4E50-B087-04F4F69027D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CD557BE-1A47-4E50-B087-04F4F69027D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FB670F9-B7BF-4C4E-97F7-0A0FABFB4896}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FB670F9-B7BF-4C4E-97F7-0A0FABFB4896}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FB670F9-B7BF-4C4E-97F7-0A0FABFB4896}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FB670F9-B7BF-4C4E-97F7-0A0FABFB4896}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4D91C4A-2801-427D-8825-1A8BA89E46DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4D91C4A-2801-427D-8825-1A8BA89E46DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4D91C4A-2801-427D-8825-1A8BA89E46DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4D91C4A-2801-427D-8825-1A8BA89E46DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4BE2D71-8BF2-4B36-982F-E964C69CC323}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4BE2D71-8BF2-4B36-982F-E964C69CC323}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4BE2D71-8BF2-4B36-982F-E964C69CC323}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4BE2D71-8BF2-4B36-982F-E964C69CC323}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5ABBB51-08BF-4BF2-93E1-47A09F79EE32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5ABBB51-08BF-4BF2-93E1-47A09F79EE32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5ABBB51-08BF-4BF2-93E1-47A09F79EE32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5ABBB51-08BF-4BF2-93E1-47A09F79EE32}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
