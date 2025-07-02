@@ -128,15 +128,13 @@ builder.Services.AddLogging(logging =>
 var app = builder.Build();
 
 // Pipeline de configuración HTTP
-if (app.Environment.IsDevelopment())
+// Swagger habilitado en todos los ambientes (Development y Production)
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sistema de Cheques API v1");
-        c.RoutePrefix = string.Empty; // Swagger UI en la raíz
-    });
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sistema de Cheques API v1");
+    c.RoutePrefix = string.Empty; // Swagger UI en la raíz
+});
 
 app.UseHttpsRedirection();
 
