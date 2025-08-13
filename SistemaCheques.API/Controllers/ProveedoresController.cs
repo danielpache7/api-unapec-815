@@ -2,6 +2,8 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SistemaCheques.Application.DTOs;
+using SistemaCheques.Application.Commands.Proveedor;
+using SistemaCheques.Application.Queries.Proveedor;
 using SistemaCheques.Domain.Enums;
 
 namespace SistemaCheques.API.Controllers;
@@ -24,8 +26,9 @@ public class ProveedoresController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ProveedorDto>>> GetAll([FromQuery] bool soloActivos = false)
     {
-        // Implementar queries específicas para proveedores
-        return Ok(new List<ProveedorDto>());
+        var query = new GetAllProveedoresQuery(soloActivos);
+        var result = await _mediator.Send(query);
+        return Ok(result);
     }
 
     /// <summary>
@@ -34,8 +37,11 @@ public class ProveedoresController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<ProveedorDto>> GetById(int id)
     {
-        // Implementar query específica
-        return Ok(new ProveedorDto());
+        var query = new GetProveedorByIdQuery(id);
+        var result = await _mediator.Send(query);
+        if (result == null)
+            return NotFound($"Proveedor con ID {id} no encontrado");
+        return Ok(result);
     }
 
     /// <summary>
@@ -44,8 +50,9 @@ public class ProveedoresController : ControllerBase
     [HttpGet("por-tipo/{tipoPersona}")]
     public async Task<ActionResult<IEnumerable<ProveedorDto>>> GetByTipoPersona(TipoPersona tipoPersona)
     {
-        // Implementar query específica
-        return Ok(new List<ProveedorDto>());
+        var query = new GetProveedoresByTipoPersonaQuery(tipoPersona);
+        var result = await _mediator.Send(query);
+        return Ok(result);
     }
 
     /// <summary>
@@ -54,8 +61,11 @@ public class ProveedoresController : ControllerBase
     [HttpGet("por-cedula/{cedulaRnc}")]
     public async Task<ActionResult<ProveedorDto>> GetByCedulaRnc(string cedulaRnc)
     {
-        // Implementar query específica
-        return Ok(new ProveedorDto());
+        var query = new GetProveedorByCedulaRncQuery(cedulaRnc);
+        var result = await _mediator.Send(query);
+        if (result == null)
+            return NotFound($"Proveedor con cédula/RNC {cedulaRnc} no encontrado");
+        return Ok(result);
     }
 
     /// <summary>
@@ -64,8 +74,17 @@ public class ProveedoresController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<ProveedorDto>> Create([FromBody] CreateProveedorDto dto)
     {
-        // Implementar command
-        return CreatedAtAction(nameof(GetById), new { id = 1 }, new ProveedorDto());
+        var command = new CreateProveedorCommand
+        {
+            Nombre = dto.Nombre,
+            TipoPersona = dto.TipoPersona,
+            CedulaRnc = dto.CedulaRnc,
+            Balance = dto.Balance,
+            CuentaContableProveedor = dto.CuentaContableProveedor,
+            Estado = dto.Estado
+        };
+        var result = await _mediator.Send(command);
+        return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
     }
 
     /// <summary>
@@ -77,8 +96,18 @@ public class ProveedoresController : ControllerBase
         if (id != dto.Id)
             return BadRequest("El ID de la URL no coincide con el ID del DTO");
 
-        // Implementar command
-        return Ok(new ProveedorDto());
+        var command = new UpdateProveedorCommand
+        {
+            Id = dto.Id,
+            Nombre = dto.Nombre,
+            TipoPersona = dto.TipoPersona,
+            CedulaRnc = dto.CedulaRnc,
+            Balance = dto.Balance,
+            CuentaContableProveedor = dto.CuentaContableProveedor,
+            Estado = dto.Estado
+        };
+        var result = await _mediator.Send(command);
+        return Ok(result);
     }
 
     /// <summary>
@@ -87,7 +116,10 @@ public class ProveedoresController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<ActionResult> Delete(int id)
     {
-        // Implementar command
+        var command = new DeleteProveedorCommand(id);
+        var result = await _mediator.Send(command);
+        if (!result)
+            return NotFound($"Proveedor con ID {id} no encontrado");
         return NoContent();
     }
 } 

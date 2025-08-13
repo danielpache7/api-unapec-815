@@ -9,6 +9,9 @@ using SistemaCheques.Infrastructure.Repositories;
 using System.Reflection;
 using System.Text;
 
+// Configuración global para PostgreSQL y DateTime
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Configuración de Entity Framework
@@ -105,15 +108,14 @@ builder.Services.AddSwaggerGen(c =>
     }
 });
 
-// Configuración de CORS
+// Configuración de CORS - COMPLETAMENTE ABIERTO
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigins", policy =>
+    options.AddPolicy("AllowAllOrigins", policy =>
     {
-        policy.WithOrigins("http://localhost:3000", "https://localhost:3001") // Agregar orígenes permitidos
-              .AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowCredentials();
+        policy.AllowAnyOrigin()   // Permite cualquier origen
+              .AllowAnyHeader()   // Permite cualquier header
+              .AllowAnyMethod();  // Permite cualquier método
     });
 });
 
@@ -123,6 +125,12 @@ builder.Services.AddLogging(logging =>
     logging.ClearProviders();
     logging.AddConsole();
     logging.AddDebug();
+});
+
+// Configuración específica para logging de CORS
+builder.Services.AddLogging(logging =>
+{
+    logging.AddFilter("Microsoft.AspNetCore.Cors", LogLevel.Debug);
 });
 
 var app = builder.Build();
@@ -138,7 +146,21 @@ app.UseSwaggerUI(c =>
 
 app.UseHttpsRedirection();
 
-app.UseCors("AllowSpecificOrigins");
+// Middleware personalizado para debug de CORS
+app.Use(async (context, next) =>
+{
+    var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
+    logger.LogInformation($"Request: {context.Request.Method} {context.Request.Path}");
+    logger.LogInformation($"Origin: {context.Request.Headers["Origin"]}");
+    logger.LogInformation($"User-Agent: {context.Request.Headers["User-Agent"]}");
+    
+    await next();
+    
+    logger.LogInformation($"Response Status: {context.Response.StatusCode}");
+});
+
+// CORS habilitado para todos los orígenes
+app.UseCors("AllowAllOrigins");
 
 // Autenticación y autorización deshabilitadas
 // app.UseAuthentication();

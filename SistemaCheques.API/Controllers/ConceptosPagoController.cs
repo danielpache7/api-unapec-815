@@ -8,7 +8,7 @@ using SistemaCheques.Application.Queries.ConceptoPago;
 namespace SistemaCheques.API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/ConceptosPago")] // Ruta compatible con el frontend
 // [Authorize] // Temporalmente deshabilitado para testing
 public class ConceptosPagoController : ControllerBase
 {
@@ -81,5 +81,18 @@ public class ConceptosPagoController : ControllerBase
             return NotFound($"Concepto de pago con ID {id} no encontrado");
             
         return NoContent();
+    }
+
+    /// <summary>
+    /// Endpoint de prueba para verificar CORS
+    /// </summary>
+    [HttpGet("test-cors")]
+    public ActionResult TestCors()
+    {
+        return Ok(new { 
+            message = "CORS está funcionando correctamente",
+            timestamp = DateTime.UtcNow,
+            headers = Request.Headers.ToDictionary(h => h.Key, h => h.Value.ToString())
+        });
     }
 } 
